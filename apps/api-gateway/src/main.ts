@@ -41,10 +41,13 @@ const limiter = rateLimit({
 })
 app.use(limiter);
 
-
-app.get('/api', (req, res) => {
+app.get('/gateway-health', (req, res) => {
   res.send({ message: 'Welcome to api-gateway!' });
 });
+
+// connect our atu service ip
+app.use("/", proxy("http://localhost:6001"));
+
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
